@@ -1,0 +1,52 @@
+var accounts = [
+ { account: "IRA-4679", user: "1", balance: "5175.36"},
+ { account: "AAA-3571", user: "1", balance: "3106701.85"},
+ { account: "AAA-4671", user: "1", balance: "138971.19"},
+ { account: "ROT-1687", user: "2", balance: "2686.00"},
+ { account: "AAA-7894", user: "2", balance: "68761.32"},
+ { account: "IRA-6818", user: "2", balance: "564.67"},
+ { account: "IRA-6819", user: "2", balance: "6564.67"}
+];
+
+//Scenario A filtered by Norah with all account types (ROT, IRA, AAA)
+let filterNorah = accounts.filter(function(profile) {
+    return profile.user == 1;
+});
+console.log(filterNorah);
+
+//Scenario B filtered by account type sorted by balance ascending (change attribute vaue AAA, ROT or IRA )
+
+let filtro = accounts.filter(function(profile) {
+    return profile.account.includes('AAA');
+});
+console.log(filtro);
+filtro.sort((a, b) => a.balance - b.balance);
+
+filtro.forEach((e) => {
+    console.log(`${e.account} ${e.user} ${e.balance}`);
+});
+
+// Scenario C filtered by Alyx with IRA account type; sorted by balance descending
+
+let filtrar_usuario = accounts.filter(function(profile) {
+    return profile.user == 2;
+});
+console.log(filtrar_usuario);
+
+let filtrar_cuenta = filtrar_usuario.filter(function(profile){
+    return profile.account.includes('IRA');
+});
+console.log(filtrar_cuenta);
+
+filtrar_cuenta.sort((a, b) => a.balance - b.balance);
+
+filtrar_cuenta.forEach((e) => {
+    console.log(`${e.account} ${e.user} ${e.balance}`);
+});
+
+//Scenario D filtered by All users; sorted by balance ascending
+
+accounts.sort((a, b) => a.balance - b.balance);
+accounts.forEach((e) => {
+    console.log(`${e.account} ${e.user} ${e.balance}`);
+});
