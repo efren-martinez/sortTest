@@ -1,3 +1,6 @@
+var users = [
+ { id: "1", name: "Norah" },
+ { id: "2", name: "Alyx" } ];
 var accounts = [
  { account: "IRA-4679", user: "1", balance: "5175.36"},
  { account: "AAA-3571", user: "1", balance: "3106701.85"},
@@ -8,45 +11,76 @@ var accounts = [
  { account: "IRA-6819", user: "2", balance: "6564.67"}
 ];
 
+function imprimir_formato(usuario, cuentas){
+    let inicio = '[';
+    let fin = ']';
+    let cadena = '';
+    let nombre_usuario = usuario.name;
+    let cuentas_usuario = cuentas;
+    
+    for(let i = 0; i < cuentas.length; i++){
+        cadena = cadena + `${nombre_usuario} | ${cuentas[i].account} | ${cuentas[i].balance}, `;
+    }
+    cadena = cadena.slice(0, -2);
+    return `${inicio} ${cadena} ${fin}`;
+}
+var filterName1 = "Norah";
+var filterName2 = "Alyx";
+
+let getUserId = users.find(o => o.name == filterName1);
+
+var userIdentifier = getUserId.id;
+
 //Scenario A filtered by Norah with all account types (ROT, IRA, AAA)
-let filterNorah = accounts.filter(function(profile) {
-    return profile.user == 1;
+let filtrar_cuentas = accounts.filter(function(profile) {
+    return profile.user == userIdentifier;
 });
-console.log(filterNorah);
+let impresion = imprimir_formato(getUserId, filtrar_cuentas)
+console.log(impresion);
 
 //Scenario B filtered by account type sorted by balance ascending (change attribute vaue AAA, ROT or IRA )
+
+let getUserIdTwo = users.find(o => o.name == filterName2);
 
 let filtro = accounts.filter(function(profile) {
     return profile.account.includes('AAA');
 });
-console.log(filtro);
+
 filtro.sort((a, b) => a.balance - b.balance);
 
-filtro.forEach((e) => {
-    console.log(`${e.account} ${e.user} ${e.balance}`);
-});
+let impresionTwo = imprimir_formato(getUserIdTwo, filtro)
+console.log(impresionTwo);
+
 
 // Scenario C filtered by Alyx with IRA account type; sorted by balance descending
 
-let filtrar_usuario = accounts.filter(function(profile) {
-    return profile.user == 2;
-});
-console.log(filtrar_usuario);
+let getUserIdScenThree = users.find(o => o.name == filterName2 );
+var userIdentifierScenThree = getUserIdScenThree.id;
+const escenarioTres = accounts.filter(activity => (activity.account.includes("IRA") && activity.user.includes(userIdentifierScenThree)));
 
-let filtrar_cuenta = filtrar_usuario.filter(function(profile){
-    return profile.account.includes('IRA');
-});
-console.log(filtrar_cuenta);
+escenarioTres.sort((b, a) => a.balance - b.balance);
 
-filtrar_cuenta.sort((a, b) => a.balance - b.balance);
+let impresionThree = imprimir_formato(getUserIdScenThree, escenarioTres)
 
-filtrar_cuenta.forEach((e) => {
-    console.log(`${e.account} ${e.user} ${e.balance}`);
-});
+console.log(impresionThree);
+
 
 //Scenario D filtered by All users; sorted by balance ascending
-
-accounts.sort((a, b) => a.balance - b.balance);
-accounts.forEach((e) => {
-    console.log(`${e.account} ${e.user} ${e.balance}`);
-});
+function imprimir_formatoD(usuarios, cuentas){
+    let inicio = '[';
+    let fin = ']';
+    let cadena = '';
+    let nombre_usuario;
+    let cuentas_usuario = cuentas;
+    
+    for(let i = 0; i < cuentas.length; i++){
+        nombre_usuario = usuarios.find(o => o.id == cuentas[i].user);
+        
+        cadena = cadena + `${nombre_usuario.name} | ${cuentas[i].account} | ${cuentas[i].balance}, `;
+    }
+    cadena = cadena.slice(0, -2);
+    return `${inicio} ${cadena} ${fin}`;
+}
+var allAccounts = accounts.sort((a, b) => a.balance - b.balance);
+let impresionFour = imprimir_formatoD(users, allAccounts)
+console.log(impresionFour);
